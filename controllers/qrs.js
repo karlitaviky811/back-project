@@ -94,7 +94,7 @@ var controller = {
                 type: params.type,
                 project: params.project,
                 description: params.description,
-                status: params.status,
+                status:  params.feedBack !== 'Mensaje enviado al administrador' ? 'Feedback Administrador': params.status ,
                 feedBack: {
                     comment: params.feedBack
                 }

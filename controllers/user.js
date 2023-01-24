@@ -210,13 +210,6 @@ update: function(req, res){
                 })
             }
             
-
-            if(issetUser && issetUser.email == params.email){
-                return res.status(200).send({
-                    message: 'El email no puede ser modificado 1'
-                })
-
-            }else{
                 User.findByIdAndUpdate({_id: userId}, params, {new: true}, (err, userUpdated) => {
     
                     if(err){
@@ -241,7 +234,7 @@ update: function(req, res){
                        message: "Hey"
                     })
                 }) 
-            }
+            
 
         })
     }else{
@@ -284,6 +277,7 @@ getUsers: function(req, res){
             })
         }
 
+        console.log("users", users)
         return res.status(200).send({
             status: 'success',
             users: users
