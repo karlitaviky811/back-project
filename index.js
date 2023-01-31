@@ -6,9 +6,12 @@ var port = process.env.PORT || 3999;
 
 mongoose.set('useFindAndModify', false)
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost:27017/api_rest_node', { useNewUrlParser: true})
+const mongoAtlasUri =
+"mongodb+srv://admin:admin@cluster0.lk8k50s.mongodb.net/?retryWrites=true&w=majority";
+mongoose.connect(mongoAtlasUri,
+    { useNewUrlParser: true, useUnifiedTopology: true },)
         .then(()=>{
-            console.log("La conexión a la base de datos de mongo se ha realizado correctamente")
+            console.log("La conexión a la base de datos de mongo se ha realizado correctamente", port)
             //Crear el servidor
 
             app.listen(port, ()=>{
@@ -16,3 +19,8 @@ mongoose.connect('mongodb://localhost:27017/api_rest_node', { useNewUrlParser: t
             })
         })
         .catch(error=> console.log(error))
+
+        mongoose.set('useFindAndModify', false)
+        mongoose.Promise = global.Promise;
+
+

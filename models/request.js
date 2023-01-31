@@ -17,7 +17,8 @@ var RequestSchema = Schema({
         comment: String
     },
     user: {type: Schema.ObjectId, ref:'User'},
-    status: String                                                                                             
+    status: String,
+    image: String                                                                                             
 });
 
 // Cargar paginación

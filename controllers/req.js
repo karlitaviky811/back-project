@@ -55,8 +55,9 @@ var controller = {
                     request.feedBack = {
                         comment: params.feedBack}
                     //Gaurdar request
-                console.log(request)
+                    request.image = params.image
 
+                    console.log(request)
                     request.save((err, reqStored)=>{
 
 
@@ -242,7 +243,8 @@ var controller = {
                 status: params.status,
                 feedBack : {
                     comment: params.feedBack
-                }
+                },
+                image : params.image
             }
             console.log("update", update)
             Request.findOneAndUpdate({ _id : reqId , user : req.user.sub }, update, {new: true}, (err, reqUpdate)=>{
