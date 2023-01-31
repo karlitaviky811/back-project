@@ -59,10 +59,244 @@ var controller = {
 
                 qrs.docs.forEach(element => {
                     const month = element.date.getMonth() + 1;
-                    console.log(i, month)
+                    console.log(i, month, element)
                     if (i == month) {
                         cont++
                     }
+                });
+                let obj = {
+                    month: i,
+                    reqs: cont
+                }
+                arrReqMont.push(cont)
+                cont = 0;
+
+            }
+            let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+
+            return res.status(200).send({
+                status: 'success',
+                data: {
+                    labels: arrM,
+                    series: arrReqMont
+                },
+
+            })
+
+        })
+
+
+    },
+    obtain: function (req, res) {
+
+
+        //Cargar la libreria de la paginación en la clase
+
+        //Recoger la página actual
+
+        if (!req.params.page || req.params.page == null || req.params.page == undefined || req.params.page == 0 || req.params.page == '0') {
+            var page = 1
+        } else {
+            var page = parseInt(req.params.page);
+        }
+
+        var options = {
+            sort: { date: -1 },
+            populate: 'user',
+            limit: 10,
+            page: page
+        }
+        //Indicar las opciones de paginación
+
+
+        //Find paginado
+
+        Request.paginate({}, options, (err, qrs) => {
+
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al hacer la consulta'
+                })
+            }
+            if (!qrs) {
+                return res.status(404).send({
+                    status: 'notfound',
+                    message: 'No hay solicitudes'
+                })
+            }
+
+            let i = 1;
+            let months = 13;
+            let cont = 0;
+            let arrReqMont = [];
+
+            for (i = 1; i < months; i++) {
+
+                qrs.docs.forEach(element => {
+                    const month = element.date.getMonth() + 1;
+                    console.log(i, month, element)
+                        if (i == month) {
+                            cont++
+                        }
+                });
+                let obj = {
+                    month: i,
+                    reqs: cont
+                }
+                arrReqMont.push(cont)
+                cont = 0;
+
+            }
+            let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+
+            return res.status(200).send({
+                status: 'success',
+                data: {
+                    labels: arrM,
+                    series: arrReqMont
+                },
+
+            })
+
+        })
+
+
+    },
+    obtainRejected: function (req, res) {
+
+
+        //Cargar la libreria de la paginación en la clase
+
+        //Recoger la página actual
+
+        if (!req.params.page || req.params.page == null || req.params.page == undefined || req.params.page == 0 || req.params.page == '0') {
+            var page = 1
+        } else {
+            var page = parseInt(req.params.page);
+        }
+
+        var options = {
+            sort: { date: -1 },
+            populate: 'user',
+            limit: 10,
+            page: page
+        }
+        //Indicar las opciones de paginación
+
+
+        //Find paginado
+
+        Request.paginate({}, options, (err, qrs) => {
+
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al hacer la consulta'
+                })
+            }
+            if (!qrs) {
+                return res.status(404).send({
+                    status: 'notfound',
+                    message: 'No hay solicitudes'
+                })
+            }
+
+            let i = 1;
+            let months = 13;
+            let cont = 0;
+            let arrReqMont = [];
+
+            for (i = 1; i < months; i++) {
+
+                qrs.docs.forEach(element => {
+                    const month = element.date.getMonth() + 1;
+                    console.log(i, month, element)
+                    if(element.status == 'Rejected'){
+                        if (i == month) {
+                            cont++
+                        }
+                    }
+                    
+                });
+                let obj = {
+                    month: i,
+                    reqs: cont
+                }
+                arrReqMont.push(cont)
+                cont = 0;
+
+            }
+            let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+
+            return res.status(200).send({
+                status: 'success',
+                data: {
+                    labels: arrM,
+                    series: arrReqMont
+                },
+
+            })
+
+        })
+
+
+    },
+    obtainAcepted: function (req, res) {
+
+
+        //Cargar la libreria de la paginación en la clase
+
+        //Recoger la página actual
+
+        if (!req.params.page || req.params.page == null || req.params.page == undefined || req.params.page == 0 || req.params.page == '0') {
+            var page = 1
+        } else {
+            var page = parseInt(req.params.page);
+        }
+
+        var options = {
+            sort: { date: -1 },
+            populate: 'user',
+            limit: 10,
+            page: page
+        }
+        //Indicar las opciones de paginación
+
+
+        //Find paginado
+
+        Request.paginate({}, options, (err, qrs) => {
+
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al hacer la consulta'
+                })
+            }
+            if (!qrs) {
+                return res.status(404).send({
+                    status: 'notfound',
+                    message: 'No hay solicitudes'
+                })
+            }
+
+            let i = 1;
+            let months = 13;
+            let cont = 0;
+            let arrReqMont = [];
+
+            for (i = 1; i < months; i++) {
+
+                qrs.docs.forEach(element => {
+                    const month = element.date.getMonth() + 1;
+                    console.log(i, month, element)
+                    if(element.status == 'Acepted'){
+                        if (i == month) {
+                            cont++
+                        }
+                    }
+                    
                 });
                 let obj = {
                     month: i,
