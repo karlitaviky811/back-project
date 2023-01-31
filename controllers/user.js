@@ -34,7 +34,7 @@ try{
     var validate_surname = !validator.isEmpty(params.surname);
     var validate_email= !validator.isEmpty(params.email) && validator.isEmail(params.email);
     var validate_password = !validator.isEmpty(params.password);
-    console.log("params", req.body)
+    console.log("params-----", req.body)
 }catch(err){
     return res.status(200).send({
         message: 'Faltan datos por enviar'
@@ -51,7 +51,7 @@ if(validate_name && validate_surname && validate_password && validate_email){
         user.password = params.password;
         user.role = params.role;
         user.email = params.email.toLowerCase();
-        console.log("params", params)
+        console.log("params------", params)
     //Comprobar si el usuario existe, 
         User.findOne({email: user.email}, (err, issetUser)=>{
 
@@ -124,9 +124,9 @@ login: function(req, res){
     }
     var user = new User();
     user.email = params.email.toLowerCase();
-    console.log("user.email", user.email)
+    console.log("user.email---", user.email)
     User.findOne({email: params.email.toLowerCase()}, (err, user)=>{
-       
+        console.log("params", user)
       if(err){
         return res.status(400).send({
             message: 'Error a intentar identificarse'

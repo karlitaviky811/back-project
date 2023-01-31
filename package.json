@@ -14,10 +14,11 @@
     "body-parser": "^1.18.3",
     "connect-multiparty": "^2.2.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.16.4",
     "jwt-simple": "^0.5.5",
     "moment": "^2.24.0",
-    "mongoose": "^5.4.9",
+    "mongoose": "^5.2.7",
     "mongoose-paginate-v2": "^1.0.20",
     "validator": "^10.11.0"
   },
