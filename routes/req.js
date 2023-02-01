@@ -13,12 +13,15 @@ router.post('/request',md_auth.authenticated, RequestController.save);
 router.get('/requests/:page?',RequestController.getRequests);
 router.get('/user-requests/:user',RequestController.getRequestsUser);
 router.get('/request/:id',RequestController.getRequest);
+router.get('/request/group/:id',RequestController.getRequestGroup);
 router.put('/request/:id',md_auth.authenticated,RequestController.updateRequest);
 router.put('/request/:id/feedback',md_auth.authenticated,RequestController.updateRequestFeedback);
 router.delete('/request/:id',md_auth.authenticated,RequestController.deleteRequest);
 
 
 router.get('/request/graph/monts',md_auth.authenticated, ChartController.obtain);
+router.get('/request/graph/montsA',md_auth.authenticated, ChartController.obtainAcepted);
+router.get('/request/graph/montsR',md_auth.authenticated, ChartController.obtainRejected);
 router.get('/request/graph/status',md_auth.authenticated, ChartController.obtainReqStatus);
 router.get('/request/graph/statusActuallyMC',md_auth.authenticated, ChartController.obtainReqStatusMonthActuallyC);
 router.get('/request/graph/statusActuallyMR',md_auth.authenticated, ChartController.obtainReqStatusMonthActuallyR);
