@@ -34,7 +34,7 @@ var controller = {
             var validate_urgency = !validator.isEmpty(params.urgency)
             var validate_description = !validator.isEmpty(params.description)
 
-     console.log("data to base 64",  Buffer.from(params.file).toString('base64')) 
+     console.log("data to base 64") 
         } catch (err) {
             return res.status(200).send({
                 message: 'Faltan datos por enviar'
@@ -364,7 +364,7 @@ var controller = {
                 urgency: params.urgency,
                 status: params.status,
                 feedBack: {
-                    comment: params.feedBack
+                    comment: ''
                 },
                 image: params.image
             }
@@ -399,11 +399,12 @@ var controller = {
         //Validar los datos que llegan de POST
         //Montar un JSON con los datos modificables
     },
+    /*
     updateRequestFeedback: function (req, res) {
 
         //Obtener el idTopic
         var reqId = req.params.id;
-
+console.log("reqId", reqId)
         //Find por id del topic
         var params = req.body;
         //Recoger los datos que llegan de POST
@@ -418,7 +419,7 @@ var controller = {
             var validate_status = !validator.isEmpty(params.status)
         } catch (err) {
 
-            console.log("hey", params, validate_feedback)
+            console.log("hey", params, params)
             return res.status(200).send({
                 message: 'Faltan datos por enviar'
             })
@@ -440,9 +441,9 @@ var controller = {
                 status: params.status,
                 feedBack: {
                     comment: params.feedBack
-                }
+                },
             }
-            console.log("update --->", update)
+            console.log("update --->", update, req.user.sub )
             Request.findOneAndUpdate({ _id: reqId, user: req.user.sub }, update, { new: true }, (err, reqUpdate) => {
 
                 if (err) {
@@ -472,6 +473,79 @@ var controller = {
         }
         //Validar los datos que llegan de POST
         //Montar un JSON con los datos modificables
+    },/*/
+
+    updateRequestFeedback: function (req, res) {
+        //Tomar el id del proyecto de URL
+
+        var reqId = req.params.id;
+
+        //Find por id del topic
+        var params = req.body;
+        //Recoger los datos que llegan de POST
+console.log("params", params)
+        try {
+            var validate_type = !validator.isEmpty(params.type);
+            var validate_project = !validator.isEmpty(params.project);
+            var validate_title = !validator.isEmpty(params.title);
+            var validate_priority = !validator.isEmpty(params.priority);
+            var validate_description = !validator.isEmpty(params.description);
+            var validate_status = !validator.isEmpty(params.status)
+        } catch (err) {
+            return res.status(200).send({
+                message: 'Faltan datos por enviar'
+            })
+        }
+
+        if (validate_type && validate_project && validate_title && validate_priority &&
+            validate_description && validate_status) {
+
+
+            console.log("params---->", params)
+            var update = {
+                type: params.type,
+                project: params.project,
+                title: params.title,
+                priority: params.priority,
+                description: params.description,
+                urgency: params.urgency,
+                status: params.status,
+                feedBack: {
+                    comment: params.feedBack
+                }
+            }
+
+            //Validar si en la creación del proyecto se debe incluir al usuario
+            Request.findOneAndUpdate({ _id: reqId }, update, { new: true }, (err, qrsUpdate) => {
+
+
+                console.log("update", update, req.user.sub)
+
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error al actualizar qrs'
+                    })
+                }
+
+                if (!qrsUpdate) {
+                    return res.status(404).send({
+                        message: 'No se pudo actualizar el qrs'
+                    })
+                }
+
+                return res.status(200).send({
+                    status: 'success',
+                    qrsUpdate
+                })
+            })
+
+
+        } else {
+            return res.status(404).send({
+                message: 'Error en los datos enviados'
+            })
+        }
+
     },
     deleteRequest(req, res) {
 
