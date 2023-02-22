@@ -16,5 +16,7 @@ router.post('/login', UserController.login);
 router.put('/update', md_auth.authenticated, UserController.update)
 router.get('/users', UserController.getUsers)
 router.get('/user/:userId', UserController.getUser)
+router.delete('/user/:userId', UserController.deleteUser)
+
 
 module.exports = router;

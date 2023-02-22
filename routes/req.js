@@ -22,6 +22,8 @@ router.delete('/request/:id',md_auth.authenticated,RequestController.deleteReque
 router.get('/request/graph/monts',md_auth.authenticated, ChartController.obtain);
 router.get('/request/graph/montsA',md_auth.authenticated, ChartController.obtainAcepted);
 router.get('/request/graph/montsR',md_auth.authenticated, ChartController.obtainRejected);
+router.get('/request/graph/montsAUser/:id',md_auth.authenticated, ChartController.obtainAcepted);
+router.get('/request/graph/montsRUser/id',md_auth.authenticated, ChartController.obtainRejected);
 router.get('/request/graph/status',md_auth.authenticated, ChartController.obtainReqStatus);
 router.get('/request/graph/statusActuallyMC',md_auth.authenticated, ChartController.obtainReqStatusMonthActuallyC);
 router.get('/request/graph/statusActuallyMR',md_auth.authenticated, ChartController.obtainReqStatusMonthActuallyR);

@@ -291,7 +291,7 @@ var controller = {
                 qrs.docs.forEach(element => {
                     const month = element.date.getMonth() + 1;
                     console.log(i, month, element)
-                    if(element.status == 'Acepted'){
+                    if(element.status == 'Approved'){
                         if (i == month) {
                             cont++
                         }
@@ -585,7 +585,7 @@ var controller = {
 
 
             let arrReqStatus = [];
-            let status = ['Accepted']
+            let status = ['Approved']
             let cont = 0;
             let today = new Date()
 
@@ -651,7 +651,7 @@ var controller = {
 
 
 
-            let status = ['Accepted']
+            let status = ['Approved']
             let cont = 0;
             let today = new Date()
 
@@ -1365,7 +1365,7 @@ var controller = {
 
 
                 let arrReqStatus = [];
-                let status = ['Accepted']
+                let status = ['Approved']
                 let cont = 0;
                 let today = new Date()
 
@@ -1431,7 +1431,7 @@ var controller = {
 
 
 
-            let status = ['Accepted']
+            let status = ['Approved']
             let cont = 0;
             let today = new Date()
 

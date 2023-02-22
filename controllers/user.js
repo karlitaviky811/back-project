@@ -290,6 +290,35 @@ getUsers: function(req, res){
     })
 
 },
+deleteUser: function(req, res){
+
+    var userId = req.params.userId
+    var reqId = req.params.id;
+
+    User.findOneAndDelete({ _id: userId }, (err, userRemoved) => {
+        if (err) {
+            return res.status(500).send({
+                status: 'error',
+                message: 'Error en la petición'
+            })
+        }
+
+        if (!userRemoved) {
+            return res.status(404).send({
+                status: 'error',
+                message: 'El request no se ha eliminado'
+            })
+        }
+
+        return res.status(200).send({
+            status: 'success',
+            userRemoved
+        })
+    })
+
+
+},
+
 getUser: function(req, res){
 
     var userId = req.params.userId

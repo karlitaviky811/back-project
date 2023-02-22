@@ -86,6 +86,7 @@ var controller = {
                 message: 'Faltan datos por enviar'
             })
         }
+        console.log("heree baeee", params)
 
         if (validate_type && validate_project && validate_title && validate_description) {
 
@@ -94,7 +95,7 @@ var controller = {
                 type: params.type,
                 project: params.project,
                 description: params.description,
-                status: params.status == 'Enviada al admin' ? param.status : 'Procesada por el admin',
+                status: params.status == 'Enviada al admin' ? params.status : 'Procesada por el admin',
                 feedBack: {
                     comment: params.feedBack
                 }
@@ -227,6 +228,46 @@ console.log("params", params)
                 qrsRemoved
             })
         })
+    },
+    getQRSUser: function (req, res) {
+
+        //Conseguir el id del usuario
+
+
+        //Find condición usuario
+
+
+        //Deevolver resultado
+        var reqId = req.params.id;
+
+        QRS.find({
+            user: reqId
+        })
+            .sort([['date', 'descending']])
+            .exec((err, qrs) => {
+
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la petición'
+                    })
+                }
+
+                if (!qrs) {
+                    return res.status(500).send({
+                        status: 'Error',
+                        message: 'No hay solicitudes para mostrar'
+                    })
+                }
+
+
+                return res.status(200).send({
+                    status: 'success',
+                    qrs
+                })
+            })
+
+
+
     },
     obtain: function (req, res) {
 
