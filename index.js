@@ -5,7 +5,7 @@ var app = require('./app');
 var port = process.env.PORT || 3999;
 require('dotenv').config();
 mongoose.Promise = global.Promise;
-require('dotenv').config();
+
 console.log("here", process.env.MONGODB_URI)
 
 mongoose.connect(process.env.MONGODB_URI, {

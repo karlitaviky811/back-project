@@ -395,6 +395,139 @@ var controller = {
 
 
     },
+
+    obtainAceptedUser: function (req, res) {
+
+        //Conseguir el id del usuario
+
+
+        //Find condición usuario
+
+
+        //Deevolver resultado
+        var userId = req.params.user
+
+        Request.find({
+            user: userId
+        })
+            .sort([['date', 'descending']])
+            .exec((err, requests) => {
+
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la petición'
+                    })
+                }
+
+                if (!requests) {
+                    return res.status(500).send({
+                        status: 'Error',
+                        message: 'No hay solicitudes para mostrar'
+                    })
+                }
+
+                console.log("requests",requests)
+                let i = 1;
+                let months = 13;
+                let cont = 0;
+                let arrReqMont = [];
+
+                for (i = 1; i < months; i++) {
+
+                    requests.forEach(element => {
+                        const month = element.date.getMonth() + 1;
+                        console.log(i, month, element)
+                        if(element.status == 'Accepted'){
+                            if (i == month) {
+                                cont++
+                            }
+                        }
+                        
+                    });
+                    let obj = {
+                        month: i,
+                        reqs: cont
+                    }
+                    arrReqMont.push(cont)
+                    cont = 0;
+                    
+                }
+                let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+
+                return res.status(200).send({
+                    status: 'success',
+                    labels: arrM,
+                    series: arrReqMont
+                })
+            })
+    },
+
+    obtainRejectedUser: function (req, res) {
+
+        //Conseguir el id del usuario
+
+
+        //Find condición usuario
+
+
+        //Deevolver resultado
+        var userId = req.params.user
+
+        Request.find({
+            user: userId
+        })
+            .sort([['date', 'descending']])
+            .exec((err, requests) => {
+
+                if (err) {
+                    return res.status(500).send({
+                        message: 'Error en la petición'
+                    })
+                }
+
+                if (!requests) {
+                    return res.status(500).send({
+                        status: 'Error',
+                        message: 'No hay solicitudes para mostrar'
+                    })
+                }
+
+                console.log("requests",requests)
+                let i = 1;
+                let months = 13;
+                let cont = 0;
+                let arrReqMont = [];
+
+                for (i = 1; i < months; i++) {
+
+                    requests.forEach(element => {
+                        const month = element.date.getMonth() + 1;
+                        console.log(i, month, element)
+                        if(element.status == 'Rejected'){
+                            if (i == month) {
+                                cont++
+                            }
+                        }
+                        
+                    });
+                    let obj = {
+                        month: i,
+                        reqs: cont
+                    }
+                    arrReqMont.push(cont)
+                    cont = 0;
+                    
+                }
+                let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+
+                return res.status(200).send({
+                    status: 'success',
+                    labels: arrM,
+                    series: arrReqMont
+                })
+            })
+    },
+
     obtainReqStatusMonthActuallyC: function (req, res) {
 
 
@@ -780,6 +913,7 @@ var controller = {
 
                         })
                         let objData = {
+                            id: prj._id,
                             name: prj.title,
                             type: 'Reclamo',
                             number: cont,
@@ -882,6 +1016,7 @@ var controller = {
 
                         })
                         let objData = {
+                            id: prj._id,
                             name: prj.title,
                             type: 'Sugerencia',
                             number: cont,
@@ -1461,6 +1596,7 @@ var controller = {
                         })
 
                         let obj = {
+
                             name: prj.title,
                             cont: cont,
                             status: 'Created'
@@ -1555,6 +1691,7 @@ var controller = {
 
                             })
                             let objData = {
+                                id: prj._id,
                                 name: prj.title,
                                 type: 'Reclamo',
                                 number: cont,
@@ -1649,6 +1786,7 @@ var controller = {
 
                             })
                             let objData = {
+                                id: prj._id,
                                 name: prj.title,
                                 type: 'Sugerencia',
                                 number: cont,
@@ -1760,5 +1898,163 @@ var controller = {
 
 
     },
+    obtainQRSAllUsers: function (req, res) {
+
+console.log("hereeeee")
+        //Cargar la libreria de la paginación en la clase
+
+        //Recoger la página actual
+
+        if (!req.params.page || req.params.page == null || req.params.page == undefined || req.params.page == 0 || req.params.page == '0') {
+            var page = 1
+        } else {
+            var page = parseInt(req.params.page);
+        }
+
+        var options = {
+            sort: { date: -1 },
+            populate: 'user',
+            limit: 10,
+            page: page
+        }
+        //Indicar las opciones de paginación
+
+
+        //Find paginado
+
+        Qrs.paginate({}, options, (err, qrs) => {
+
+            if (err) {
+                return res.status(500).send({
+                    status: 'error',
+                    message: 'Error al hacer la consulta'
+                })
+            }
+            if (!qrs) {
+                return res.status(404).send({
+                    status: 'notfound',
+                    message: 'No hay solicitudes'
+                })
+            }
+
+            let i = 1;
+            let months = 13;
+            let cont = 0;
+            let arrReqMont = [];
+
+            for (i = 1; i < months; i++) {
+
+                qrs.docs.forEach(element => {
+                    const month = element.date.getMonth() + 1;
+                    console.log(i, month, element)
+                        if (i == month) {
+                            if(element.type== 'Reclamo'){
+                                cont++
+                            }
+                        }
+                });
+                let obj = {
+                    month: i,
+                    reqs: cont
+                }
+                arrReqMont.push(cont)
+                cont = 0;
+
+            }
+            let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+
+            return res.status(200).send({
+                status: 'success',
+                data: {
+                    labels: arrM,
+                    series: arrReqMont
+                },
+
+            })
+
+        })
+
+
+    },
+    obtainQRSAllUser: function (req, res) {
+
+        console.log("hereeeee")
+                //Cargar la libreria de la paginación en la clase
+        
+                //Recoger la página actual
+        
+                if (!req.params.page || req.params.page == null || req.params.page == undefined || req.params.page == 0 || req.params.page == '0') {
+                    var page = 1
+                } else {
+                    var page = parseInt(req.params.page);
+                }
+        
+                var options = {
+                    sort: { date: -1 },
+                    populate: 'user',
+                    limit: 10,
+                    page: page
+                }
+                //Indicar las opciones de paginación
+        
+                var userId = req.params.id
+                Qrs.find({
+                    user: userId
+                })
+                    .exec((err, qrs) => {
+        
+                    if (err) {
+                        return res.status(500).send({
+                            status: 'error',
+                            message: 'Error al hacer la consulta'
+                        })
+                    }
+                    if (!qrs) {
+                        return res.status(404).send({
+                            status: 'notfound',
+                            message: 'No hay solicitudes'
+                        })
+                    }
+        
+                    let i = 1;
+                    let months = 13;
+                    let cont = 0;
+                    let arrReqMont = [];
+        
+                    for (i = 1; i < months; i++) {
+        
+                        qrs.forEach(element => {
+                            const month = element.date.getMonth() + 1;
+                            console.log(i, month, element.type)
+                                if (i == month) {
+                                    if(element.type== 'Reclamo'){
+                                        cont++
+                                    }
+                                    
+                                }
+                        });
+                        let obj = {
+                            month: i,
+                            reqs: cont
+                        }
+                        arrReqMont.push(cont)
+                        cont = 0;
+        
+                    }
+                    let arrM = ['Ja', 'Fe', 'Ma', 'Ap', 'Mai', 'Ju', 'Jul', 'Au', 'Se', 'Oc', 'No', 'De']
+        
+                    return res.status(200).send({
+                        status: 'success',
+                        data: {
+                            labels: arrM,
+                            series: arrReqMont
+                        },
+        
+                    })
+        
+                })
+        
+        
+            },
 }
 module.exports = controller

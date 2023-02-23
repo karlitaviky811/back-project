@@ -22,8 +22,8 @@ router.delete('/request/:id',md_auth.authenticated,RequestController.deleteReque
 router.get('/request/graph/monts',md_auth.authenticated, ChartController.obtain);
 router.get('/request/graph/montsA',md_auth.authenticated, ChartController.obtainAcepted);
 router.get('/request/graph/montsR',md_auth.authenticated, ChartController.obtainRejected);
-router.get('/request/graph/montsAUser/:id',md_auth.authenticated, ChartController.obtainAcepted);
-router.get('/request/graph/montsRUser/id',md_auth.authenticated, ChartController.obtainRejected);
+router.get('/request/graph/montsAUser/:user',md_auth.authenticated, ChartController.obtainAceptedUser);
+router.get('/request/graph/montsRUser/:user',md_auth.authenticated, ChartController.obtainRejectedUser);
 router.get('/request/graph/status',md_auth.authenticated, ChartController.obtainReqStatus);
 router.get('/request/graph/statusActuallyMC',md_auth.authenticated, ChartController.obtainReqStatusMonthActuallyC);
 router.get('/request/graph/statusActuallyMR',md_auth.authenticated, ChartController.obtainReqStatusMonthActuallyR);
@@ -35,6 +35,9 @@ router.get('/request/graph/project/qrsQR',md_auth.authenticated, ChartController
 router.get('/request/graph/project/qrsS',md_auth.authenticated, ChartController.obtainReqProjectQRSS);
 router.get('/request/graph/project/qrsT',md_auth.authenticated, ChartController.obtainInfoQRS);
 
+
+router.get('/request/graph/project/qrs-all',ChartController.obtainQRSAllUsers);
+router.get('/request/graph/project/qrs-all/:id',ChartController.obtainQRSAllUser);
 
 
 //User
@@ -63,7 +66,13 @@ router.get('/request/graph/project/qrsT/:id',md_auth.authenticated, ChartControl
 //Entorno
 //Faraute
 
+//Proyectos con numero de quejas
 
+
+//Proyectos con solicitudes urgentes
+
+
+//Proyectos con solicitudes en revisión 
 
 //Indicador proyectos solicitudes rechazas
 //lista

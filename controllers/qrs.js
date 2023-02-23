@@ -141,7 +141,7 @@ var controller = {
         //Find por id del topic
         var params = req.body;
         //Recoger los datos que llegan de POST
-console.log("params", params)
+        console.log("params", params)
         try {
             var validate_type = !validator.isEmpty(params.type);
             var validate_title = !validator.isEmpty(params.title);
@@ -318,5 +318,11 @@ console.log("params", params)
 
 
     }
+
+
+
+
+
+    
 }
 module.exports = controller
